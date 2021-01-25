@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOKI - Users Table</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/logoSite.png">
+    <link rel="stylesheet" href="../css/loginstyle.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+	<br>
+		<h3 class="text-center"><strong>Users Table</strong></h3>
+	<br>
+
+	<table class="table table-striped table-dark table-bordered">
+	<thead>	
+		<tr>
+			<th>Fist Name</th><th>Last Name</th><th>Email</th>
+		</tr>
+	</thead >
+	<tbody>
+		<tr th:each="us:${tabUsers}">
+			<td th:text="${us.fist_name}"></td>
+			<td th:text="${us.last_name}"></td>
+			<td th:text="${us.email}"></td>
+			<td th:text="${us.roles}"></td>
+		</tr>
+	</tbody>
+	</table>
+</div>
+</body>
+</html>

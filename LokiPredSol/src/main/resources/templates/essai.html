@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+
+
+	<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+<script th:inline="javascript">
+
+$(document).ready(function(){
+
+$('.input-daterange').datepicker({
+format: 'dd-mm-yyyy',
+autoclose: true
+});
+
+});
+</script>
+<script th:inline="javascript">
+
+	/*<![CDATA[*/
+		var faultDetails = /*[[${faultDetails}]]*/"";
+	/*]]>*/
+
+
+function renderTable( faultDetails )
+{
+    var table = document.getElementById('detailsTable')
+		table.innerHTML= '<thead><tr class="table-info"><th>FLEET</th><th>AC</th><th>SEVERITY</th><th>FAULT DEFERRALCLASS</th><th>FAULT DEFERRALREF</th><th>STATUS</th><th>DUE EXT</th><th>DUE</th><th>FOUND DATE</th><th>PARENT EVENT ID</th><th>PARENT EVENT</th></tr></thead>'
+    
+    for (var i=0; i< faultDetails.length; i++)
+    {
+        var row = `<tr>
+				<td>${faultDetails[i].acf_fleet}</td>
+				<td>${faultDetails[i].acf_regcod_nospace}</td>
+		        <td>${faultDetails[i].fault_severity}</td>
+		        <td>${faultDetails[i].fault_deferralclass}</td>
+				<td>${faultDetails[i].fault_deferralref}</td>
+		        <td>${faultDetails[i].workscope_status}</td>
+		        <td>${faultDetails[i].due_date_extend}</td>
+				<td>${faultDetails[i].due_date}</td>
+		        <td>${faultDetails[i].fault_foundondate}</td>
+		        <td>${faultDetails[i].parent_event_id}</td>
+				<td>${faultDetails[i].parent_event}</td>
+			</tr>`
+			table.innerHTML +=	row
+    }
+}
+
+// If you need to change dateList element format,
+// just only change this convert function.
+function DateToUnixtime( date_string )
+{
+    return new Date(date_string).getTime() / 1000;
+}
+
+$('#buttApply').click(function()
+{
+    var unixtime_from = $('#dateFrom').datepicker('getDate').getTime() / 1000;
+    var unixtime_to = $('#dateTo').datepicker('getDate').getTime() / 1000;
+    
+  	
+    var dateListFiltered = faultDetails.filter(function(date)
+    {	
+    	
+     	var unixtime = DateToUnixtime( date.due_date ); 
+        return unixtime >= unixtime_from && unixtime <= unixtime_to;
+    });
+    
+    renderTable( dateListFiltered );
+});
+
+$( ".datepicker" ).datepicker({dateFormat: "mm dd yy"});
+
+renderTable( faultDetails );
+
+</script>
+
+	
+<script th:inline="javascript">
+
+	/*<![CDATA[*/
+		var faultDetailss = /*[[${faultDetails}]]*/"";
+	/*]]>*/
+	
+	function FilterFunction(value, data){
+	  console.log("value",value,"data",data);
+		var filteredData = [];
+		
+		var vi= value.toLowerCase();
+		for(var i = 0; i < data.length; i++){
+			var acf_fleet = data[i].acf_fleet.toLowerCase();
+			if(acf_fleet.includes(vi)){
+			console.log("On rentre dans le if, on ajoute  :",data[i]);
+			filteredData.push(data[i]);
+			}else{
+     		 console.log(" ELSE .. on n'ajoute pas la valeur :",data[i]);
+   			 }}
+		return filteredData;	
+	}
+	function rebuildTable(data){
+		var table = document.getElementById('detailsTable')
+		table.innerHTML= '<thead><tr class="table-info"><th>FLEET</th><th>AC</th><th>SEVERITY</th><th>FAULT DEFERRALCLASS</th><th>FAULT DEFERRALREF</th><th>STATUS</th><th>DUE EXT</th><th>DUE</th><th>FOUND DATE</th><th>PARENT EVENT ID</th><th>PARENT EVENT</th></tr></thead>'
+													
+		for(var i = 0; i <data.length; i++){
+			var row = `<tr>
+				<td>${data[i].acf_fleet}</td>
+				<td>${data[i].acf_regcod_nospace}</td>
+		        <td>${data[i].fault_severity}</td>
+		        <td>${data[i].fault_deferralclass}</td>
+				<td>${data[i].fault_deferralref}</td>
+		        <td>${data[i].workscope_status}</td>
+		        <td>${data[i].due_date_extend}</td>
+				<td>${data[i].due_date}</td>
+		        <td>${data[i].fault_foundondate}</td>
+		        <td>${data[i].parent_event_id}</td>
+				<td>${data[i].parent_event}</td>
+			</tr>`
+			table.innerHTML +=	row
+		}}
+	$(document).ready(function()
+	{
+	$('#txtSearchMinimal').select2({
+		placeholder:'Select...'
+	});
+	$('#txtSearchMinimal').on('change', function(){	
+		
+		var value  =$("#txtSearchMinimal option:selected").text();
+
+		var data = FilterFunction(value, faultDetailss);
+		rebuildTable(data)
+		})
+	});
+</script>
+
+<script th:inline="javascript">
+
+	/*<![CDATA[*/
+		var faultDetails = /*[[${faultDetails}]]*/"";
+	/*]]>*/
+	
+	function FiltersFunction(value, data){
+	  console.log("value",value,"data",data);
+		var filteredData = [];
+		
+		for(var j =0; j<value.length; j++){
+		var v = value[j].text;
+		var vi= v.toLowerCase();
+		console.log(v);	
+		for(var i = 0; i < data.length; i++){
+			var facf_regcod_nospace = data[i].acf_regcod_nospace.toLowerCase();
+			console.log("facf_regcod_nospace",facf_regcod_nospace,"value",value);
+			if(facf_regcod_nospace.includes(vi)){
+			console.log("On rentre dans le if, on ajoute  :",data[i]);
+			filteredData.push(data[i]);
+			}else{
+     		 console.log(" ELSE .. on n'ajoute pas la valeur :",data[i]);
+   			 }}}
+		return filteredData;	
+	}
+	function rebuildsTable(data){
+		var table = document.getElementById('detailsTable')
+		table.innerHTML= '<thead><tr class="table-info"><th>FLEET</th><th>AC</th><th>SEVERITY</th><th>FAULT DEFERRALCLASS</th><th>FAULT DEFERRALREF</th><th>STATUS</th><th>DUE EXT</th><th>DUE</th><th>FOUND DATE</th><th>PARENT EVENT ID</th><th>PARENT EVENT</th></tr></thead>'
+													
+		for(var i = 0; i <data.length; i++){
+			var row = `<tr>
+				<td>${data[i].acf_fleet}</td>
+				<td>${data[i].acf_regcod_nospace}</td>
+		        <td>${data[i].fault_severity}</td>
+		        <td>${data[i].fault_deferralclass}</td>
+				<td>${data[i].fault_deferralref}</td>
+		        <td>${data[i].workscope_status}</td>
+		        <td>${data[i].due_date_extend}</td>
+				<td>${data[i].due_date}</td>
+		        <td>${data[i].fault_foundondate}</td>
+		        <td>${data[i].parent_event_id}</td>
+				<td>${data[i].parent_event}</td>
+			</tr>`
+			table.innerHTML +=	row
+		}}
+	$(document).ready(function()
+	{
+	$('#txtSearch').select2({
+		allowClear: true,
+		tags:true,
+		placeholder:'Select values ..',
+		closeOnSelect:false
+			});
+	$('#txtSearch').on('change', function(){	
+		
+		var value  =$('#txtSearch').select2('data');
+		var valueflee = $('#txtSearchMinimal').val();
+	 	if (value === undefined || value.length == 0){
+			
+			rebuildsTable(faultDetails)
+	 	}
+		else{
+		var data = FiltersFunction(value, faultDetails);
+		rebuildsTable(data)
+		}})
+	});
+</script>
+
+
+
+
+</body>
+</html>

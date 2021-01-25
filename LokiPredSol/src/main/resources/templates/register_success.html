@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOKI - Registration Success</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/logoSite.png">
+    <link rel="stylesheet" href="../css/loginstyle.css">
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+</head>
+
+<body>
+	<div class="col-md-6 col-md-offset-3 centreVerticalement" >
+	<div class="panel panel-success text-center">
+  		<div class="panel-heading">
+    		<h4>Registration success</h4>
+  		</div>
+  		<div class="panel-body">
+   			<h1 class="text-success logo"><strong>Congratulations !</strong></h1>
+   			<div class="login-or">
+                <hr class="hr-or" >
+                <span class="span-or"></span>
+            </div>
+			<h3 class="font-weight-light">You have signed up successfully<br>Just one more step to go</h3>
+			<p><a th:href="@{/login}">Click here to Login</a><p>
+  		</div>
+  		<div class="panel-footer">@ 2021 Copyright : Predictive-Solution.com</div>
+	</div>
+	</div>
+
+</body>
+</html>

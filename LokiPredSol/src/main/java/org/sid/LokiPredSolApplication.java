@@ -11,13 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class LokiPredSolApplication {
-
-
 	public static void main(String[] args) {
-		
 		SpringApplication.run(LokiPredSolApplication.class, args);
-		
-		
+
 		//OFDetailRepository ofdr = ctx.getBean(OFDetailRepository.class);
 		//I will show the first colon of the OFDetail table
 		//ofdr.findAll().forEach(op->System.out.println(op.getAcf_fleet()));
@@ -31,15 +27,11 @@ public class LokiPredSolApplication {
 //		usrep.save(new User("Amir","DHIBI","amir10.dhibi@gmail.com","amir123"));
 //		usrep.save(new User("Eric","PELEGRIS","pelegris.eric@orange.fr","eric123"));
 //		usrep.save(new User("Emmanuel","MACRON","emmanule.macron@elysee.fr","emmanuel123"));
-//		
-//		
+
 //		RoleRepository rorep = ctx.getBean(RoleRepository.class);
 //		rorep.save(new Role("ADMIN"));
 //		rorep.save(new Role("USER"));		
-//		
-		
-		
-		 
+//
 	}
 
 }
